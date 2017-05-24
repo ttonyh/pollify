@@ -16,7 +16,7 @@ npm install pollify
 
 ## Usage
 
-**Polls are automatically started for you when you create them.**
+**poll.start() must be called before polling starts.**
 
 ### Pollify a function
 
@@ -24,7 +24,7 @@ npm install pollify
 const Pollify = require('pollify');
 
 function fn(arg1, arg2, cb) { ... }
-let poll = Pollify({ rate: 1000, mode: 'callback' }, fn, arg1, arg2);
+let poll = new Pollify({ rate: 1000, mode: 'callback' }, fn, arg1, arg2);
 ```
 
 `Pollify(options, pollFn, arg1, arg2, ...)`
