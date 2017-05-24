@@ -10,7 +10,7 @@ describe('Pollify', function () {
   it('starts polling automatically', function (done) {
     const times = [];
     const maxPolls = 2;
-    const poll = Pollify({ rate, mode: 'return' }, () => '');
+    const poll = new Pollify({ rate, mode: 'return' }, () => '');
 
     poll.on('data', (data, time) => {
       times.push(time);
@@ -28,7 +28,7 @@ describe('Pollify', function () {
     for (let i = 0; i < randLength; ++i) {
       randomArray.push(i);
     }
-    const poll = Pollify({ rate, mode: 'return' }, (...args) => args, ...randomArray);
+    const poll = new Pollify({ rate, mode: 'return' }, (...args) => args, ...randomArray);
 
     poll.on('data', data => {
       expect(data).to.eql(randomArray);
@@ -39,7 +39,7 @@ describe('Pollify', function () {
   it('can stop polling', function (done) {
     let numberOfPolls = 0;
     const maxPolls = 2;
-    const poll = Pollify({ rate, mode: 'return' }, () => '');
+    const poll = new Pollify({ rate, mode: 'return' }, () => '');
 
     poll.on('data', () => {
       ++numberOfPolls;
@@ -56,7 +56,7 @@ describe('Pollify', function () {
   it('can start polling again after stopping', function (done) {
     let numberOfPolls = 0;
     const maxPolls = 2;
-    const poll = Pollify({ rate, mode: 'return' }, () => '');
+    const poll = new Pollify({ rate, mode: 'return' }, () => '');
     let timeoutFlag = false; // Used to indicate that poll has restarted after a timeout
 
     poll.on('data', () => {
@@ -82,7 +82,7 @@ describe('Pollify', function () {
   it('does not have any effect when repeated start calls are made', function (done) {
     const times = [];
     const maxPolls = 10;
-    const poll = Pollify({ rate, mode: 'return' }, () => '');
+    const poll = new Pollify({ rate, mode: 'return' }, () => '');
     poll.start();
     poll.start();
     poll.start();
@@ -104,7 +104,7 @@ describe('Pollify', function () {
   it('does not have any effect when repeated stop calls are made', function (done) {
     let numberOfPolls = 0;
     const maxPolls = 2;
-    const poll = Pollify({ rate, mode: 'return' }, () => '');
+    const poll = new Pollify({ rate, mode: 'return' }, () => '');
     let timeoutFlag = false; // Used to indicate that poll has restarted after a timeout
 
     poll.on('data', () => {
@@ -131,7 +131,7 @@ describe('Pollify', function () {
   });
   describe('Polling Function Types', function () {
     it('polls regular functions', function (done) {
-      const poll = Pollify({ rate, mode: 'return' }, () => '');
+      const poll = new Pollify({ rate, mode: 'return' }, () => '');
 
       poll.on('data', () => {
         poll.stop();
@@ -139,7 +139,7 @@ describe('Pollify', function () {
       });
     });
     it('polls callback functions', function (done) {
-      const poll = Pollify({ rate, mode: 'callback' }, cb => cb(null));
+      const poll = new Pollify({ rate, mode: 'callback' }, cb => cb(null));
 
       poll.on('data', () => {
         poll.stop();
@@ -147,7 +147,7 @@ describe('Pollify', function () {
       });
     });
     it('polls promise functions', function (done) {
-      const poll = Pollify({ rate, mode: 'promise' }, () => Promise.resolve());
+      const poll = new Pollify({ rate, mode: 'promise' }, () => Promise.resolve());
 
       poll.on('data', () => {
         poll.stop();
@@ -156,7 +156,7 @@ describe('Pollify', function () {
     });
     it('emits error events for regular function polling', function (done) {
       const e = new Error();
-      const poll = Pollify({ rate, mode: 'return' }, () => {
+      const poll = new Pollify({ rate, mode: 'return' }, () => {
         throw e;
       });
 
@@ -168,7 +168,7 @@ describe('Pollify', function () {
     });
     it('emits error events for callback function polling', function (done) {
       const e = new Error();
-      const poll = Pollify({ rate, mode: 'callback' }, cb => cb(e));
+      const poll = new Pollify({ rate, mode: 'callback' }, cb => cb(e));
 
       poll.on('error', err => {
         expect(err).to.equal(e);
@@ -178,7 +178,7 @@ describe('Pollify', function () {
     });
     it('emits error events for promise function polling', function (done) {
       const e = new Error();
-      const poll = Pollify({ rate, mode: 'promise' }, () => Promise.reject(e));
+      const poll = new Pollify({ rate, mode: 'promise' }, () => Promise.reject(e));
 
       poll.on('error', err => {
         expect(err).to.equal(e);
