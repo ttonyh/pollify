@@ -103,12 +103,12 @@ class Pollify extends EventEmitter {
               timeDiff = self.options.rate - ( endTime / 1e6 );
 
         if ( timeDiff > 0 ) {
-            return setTimeout( self[ _poll ].bind( self ), timeDiff );
+            self.timeout = setTimeout( self[ _poll ].bind( self ), timeDiff );
+            return self.timeout;
         }
 
         return setImmediate( self[ _poll ].bind( self ) );
     }
-    
     
     start() {
         const self = this;
@@ -121,7 +121,9 @@ class Pollify extends EventEmitter {
     }
     
     stop() {
-        this.stopped = true;
+        const self = this;
+        clearTimeout( self.timeout );
+        self.stopped = true;
     }
 }
 
