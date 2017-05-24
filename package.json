@@ -1,6 +1,6 @@
 {
   "name": "pollify",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "Produces a stream of events by polling a provided function at a given rate. This rate is the minimum rate, not the exact rate (similar to setTimeout). The provided function is only polled when the previous execution has completed. This has the effect of making async calls execute in series.",
   "main": "index.js",
   "scripts": {
@@ -26,11 +26,7 @@
     "url": "https://github.com/lobabob/eventstream/issues"
   },
   "homepage": "https://github.com/lobabob/eventstream#readme",
-  "devDependencies": {
-    "chai": "^3.5.0",
-    "eslint": "^3.16.1",
-    "eslint-plugin-promise": "^3.4.2",
-    "istanbul": "^0.4.5",
-    "mocha": "^3.2.0"
+  "dependencies": {
+    "lodash": "^4.17.2"
   }
 }
